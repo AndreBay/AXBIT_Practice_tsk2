@@ -1,9 +1,12 @@
 package com.example.tskTwo.Book;
 
+import com.example.tskTwo.Author.Author;
 import com.example.tskTwo.Genre.Genre;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -21,9 +24,18 @@ public class Book {
     private long id;
     private String title;
     private String ISBN;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_GENRE")
     private Genre genre;
+
     private LocalDate dateOfCreation;
     private LocalDate dateOfModification;
+
+
+
+    @ManyToMany (mappedBy="book")
+    private List<Author> authors = new ArrayList<>();
 
     public Book() {
     }
@@ -44,6 +56,10 @@ public class Book {
         this.dateOfCreation = dateOfCreation;
         this.dateOfModification = dateOfModification;
     }
+
+    public List<Author> getAuthors() { return authors; }
+
+    public void setAuthors(List<Author> authors) { this.authors = authors; }
 
     public long getId() {
         return id;

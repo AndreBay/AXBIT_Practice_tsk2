@@ -71,6 +71,7 @@ public class Genre {
     public void setDateOfCreation(LocalDate dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
+
     public LocalDate getDateOfModification() {
         return dateOfModification;
     }
@@ -82,7 +83,10 @@ public class Genre {
     @Override
     public String toString() {
         return "Genre{" +
-                "description='" + description + '\'' +
+                "genreName = '" + genreName + '\'' +
+                "description = '" + description + '\'' +
+                "dateOfCreation = '" + dateOfCreation + '\'' +
+                "dateOfModification = '" + dateOfModification + '\'' +
                 '}';
     }
 }

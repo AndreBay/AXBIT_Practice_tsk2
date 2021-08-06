@@ -1,6 +1,5 @@
 package com.example.tskTwo.Genre;
 
-import com.example.tskTwo.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

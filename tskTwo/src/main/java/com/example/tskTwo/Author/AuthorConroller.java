@@ -1,7 +1,6 @@
 package com.example.tskTwo.Author;
 
 import com.example.tskTwo.Book.Book;
-import com.example.tskTwo.Genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +39,7 @@ public class AuthorConroller {
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String middleName,
             @RequestParam(required = false) LocalDate dateOfBirth,
-            @RequestParam(required = false) List<Book> books) {
-        authorService.putAuthor(authorId,firstName, lastName, middleName, dateOfBirth, books);
+            @RequestParam(required = false) Book book) {
+        authorService.putAuthor(authorId,firstName, lastName, middleName, dateOfBirth, book);
     }
 }

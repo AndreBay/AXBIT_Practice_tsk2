@@ -4,6 +4,7 @@ import com.example.tskTwo.Book.Book;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,26 +25,31 @@ public class Author {
     private String lastName;
     private String middleName;
     private LocalDate dateOfBirth;
-    private List<Book> books;
+    @ManyToMany
+    @JoinTable(
+            name="BOOK",
+            joinColumns=@JoinColumn(name="ID_AUTHOR", referencedColumnName="ID_AUTHOR"),
+            inverseJoinColumns=@JoinColumn(name="ID_BOOK", referencedColumnName="ID_BOOK"))
+    private List<Book> book = new ArrayList<>();
 
     public Author() {
     }
 
-    public Author(String firstName, String lastName, String middleName, LocalDate dateOfBirth, List<Book> books) {
+    public Author(String firstName, String lastName, String middleName, LocalDate dateOfBirth, List<Book> book) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.dateOfBirth = dateOfBirth;
-        this.books = books;
+        this.book = book;
     }
 
-    public Author(long id, String firstName, String lastName, String middleName, LocalDate dateOfBirth, List<Book> books) {
+    public Author(long id, String firstName, String lastName, String middleName, LocalDate dateOfBirth, List<Book> book) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.dateOfBirth = dateOfBirth;
-        this.books = books;
+        this.book = book;
     }
 
     public long getId() {
@@ -66,8 +72,8 @@ public class Author {
         return dateOfBirth;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public List<Book> getBook() {
+        return book;
     }
 
     public void setId(long id) {
@@ -90,7 +96,7 @@ public class Author {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setBook(List<Book> books) {
+        this.book = books;
     }
 }
