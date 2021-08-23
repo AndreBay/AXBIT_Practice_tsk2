@@ -63,4 +63,16 @@ public class BookService {
             book.setDateOfModification(dateOfModification);
         }                                                      
     }
+
+    @Transactional
+    public Book patchBook(Long bookId, LocalDate dateOfModification){
+        Book book = bookRepository.findById(bookId).
+                orElseThrow(()-> new IllegalStateException(
+                        "Book with Id " + bookId + " does not exist"));
+        if(dateOfModification != null && Objects.equals(book.getDateOfModification(), dateOfModification)){
+            book.setDateOfModification(dateOfModification);
+        }
+        return book;
+    }
+
 }

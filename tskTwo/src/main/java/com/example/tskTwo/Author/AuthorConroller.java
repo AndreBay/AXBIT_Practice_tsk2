@@ -2,6 +2,8 @@ package com.example.tskTwo.Author;
 
 import com.example.tskTwo.Book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -38,8 +40,16 @@ public class AuthorConroller {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String middleName,
-            @RequestParam(required = false) LocalDate dateOfBirth,
-            @RequestParam(required = false) Book book) {
-        authorService.putAuthor(authorId,firstName, lastName, middleName, dateOfBirth, book);
+            @RequestParam(required = false) LocalDate dateOfBirth) {
+        authorService.putAuthor(authorId,firstName, lastName, middleName, dateOfBirth);
+    }
+
+    @PatchMapping("/Author/{id}/{dateOfModification}")
+    public ResponseEntity<Author> updateAuthorPartially(@PathVariable Long id, @PathVariable LocalDate dateOfModification) {
+        try {
+            return new ResponseEntity<Author>(authorService.patchAuthor(id, dateOfModification), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

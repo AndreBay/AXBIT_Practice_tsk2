@@ -35,7 +35,7 @@ public class GenreService {
         boolean exists = genreRepository.existsById(genreId);
         if(!exists){
             throw new IllegalStateException(
-                    "Student with ID = " + genreId + " does not exist"
+                    "Genre with ID = " + genreId + " does not exist"
             );
         }
         genreRepository.deleteById(genreId);
@@ -45,7 +45,7 @@ public class GenreService {
     public void putGenre(Long genreId, String genreName, String description, LocalDate dateOfCreation, LocalDate dateOfModification){
         Genre genre = genreRepository.findById(genreId).
                 orElseThrow(()-> new IllegalStateException(
-                        "Student with Id " + genreId + " does not exist"));
+                        "Genre with Id " + genreId + " does not exist"));
         if(genreName != null && genreName.length() > 0 && !Objects.equals(genreName, genre.getGenreName())){
             Optional<Genre> optionalGenre = genreRepository.findGenreByGenreName(genreName);
             if(optionalGenre.isPresent()){
@@ -62,5 +62,16 @@ public class GenreService {
         if(dateOfModification != null && Objects.equals(dateOfModification, genre.getDateOfModification())){
             genre.setDateOfModification(dateOfModification);
         }
+    }
+
+    @Transactional
+    public Genre patchGenre(Long genreId, String description){
+        Genre genre = genreRepository.findById(genreId).
+                orElseThrow(()-> new IllegalStateException(
+                        "Genre with Id " + genreId + " does not exist"));
+        if(description != null && Objects.equals(genre.getDescription(), description)){
+            genre.setDescription(description);
+        }
+        return genre;
     }
 }

@@ -25,7 +25,7 @@ public class AuthorService {
 
     public void addNewAuthor(Author author){
         Optional<Author> optionalAuthor = authorRepository.findBookByAuthor(author.getFirstName(), author.getLastName(), author.getMiddleName(),
-                author.getDateOfBirth(), author.getBook());
+                author.getDateOfBirth());
         if(optionalAuthor.isPresent()){
             throw new IllegalStateException("The author is already exist");
         }
@@ -41,7 +41,7 @@ public class AuthorService {
     }
 
     @Transactional
-    public void putAuthor(Long authorId, String firstName, String lastName, String middleName, LocalDate dateOfBirth, Book books){
+    public void putAuthor(Long authorId, String firstName, String lastName, String middleName, LocalDate dateOfBirth){
         Author author = authorRepository.findById(authorId).
                 orElseThrow(() -> new IllegalStateException(
                         "Author with Id " + authorId + " does not exist"));
@@ -58,8 +58,16 @@ public class AuthorService {
         if(dateOfBirth != null && Objects.equals(dateOfBirth, author.getDateOfBirth())){
             author.setDateOfBirth(dateOfBirth);
         }
-        if(books != null && Objects.equals(books, author.getBook())){
-            author.setBook(books);
+    }
+
+    @Transactional
+    public Author patchAuthor(Long authorId, LocalDate dateOfModification){
+        Author author = authorRepository.findById(authorId).
+                orElseThrow(()-> new IllegalStateException(
+                        "Author with Id " + authorId + " does not exist"));
+        if(dateOfModification != null && Objects.equals(author.getDateOfModification(), dateOfModification)){
+            author.setDateOfModification(dateOfModification);
         }
+        return author;
     }
 }

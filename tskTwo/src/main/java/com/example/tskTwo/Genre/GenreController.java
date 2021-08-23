@@ -1,6 +1,8 @@
 package com.example.tskTwo.Genre;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -40,5 +42,16 @@ public class GenreController {
             @RequestParam(required = false) LocalDate dateOfModification){
         genreService.putGenre(StudentId, genreName, description, dateOfCreation, dateOfModification);
 
+    }
+    @PatchMapping("/Genre/{id}/{description}")
+    public ResponseEntity<Genre> updateGenrePartially(@PathVariable Long id, @PathVariable String description) {
+        try {
+            /*Genre genre = genreService.patchGenre(id, description);
+            Genre genre = GenreRepository.findById(id).get();//employeeRepository.findById(id).get();
+            genre.setDescription(description);*/
+            return new ResponseEntity<Genre>(genreService.patchGenre(id, description), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

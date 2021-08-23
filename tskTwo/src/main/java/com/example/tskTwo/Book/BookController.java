@@ -2,6 +2,8 @@ package com.example.tskTwo.Book;
 
 import com.example.tskTwo.Genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -37,6 +39,13 @@ public class BookController {
         bookService.putBook(bookId, title, ISBN, genre, dateOfCreation, dateOfModification);
     }
 
-
+    @PatchMapping("/Book/{id}/{dateOfModification}")
+    public ResponseEntity<Book> updateBookPartially(@PathVariable Long id, @PathVariable LocalDate dateOfModification) {
+        try {
+            return new ResponseEntity<Book>(bookService.patchBook(id, dateOfModification), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

@@ -5,37 +5,19 @@ import com.example.tskTwo.Genre.Genre;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "book")
 public class Book {
-    @Id
-    @SequenceGenerator(
-            name = "book_sequence",
-            sequenceName = "book_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "book_sequence"
-    )
     private long id;
     private String title;
     private String ISBN;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_GENRE")
-    private Genre genre;
-
     private LocalDate dateOfCreation;
     private LocalDate dateOfModification;
 
-
-
-    @ManyToMany (mappedBy="book")
-    private List<Author> authors = new ArrayList<>();
+    private Genre genre;
+    private List<Author> authors;
 
     public Book() {
     }
@@ -57,55 +39,62 @@ public class Book {
         this.dateOfModification = dateOfModification;
     }
 
-    public List<Author> getAuthors() { return authors; }
-
-    public void setAuthors(List<Author> authors) { this.authors = authors; }
-
+    @Id
+    @Column(name = "id", nullable = false)
     public long getId() {
         return id;
     }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public LocalDate getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public LocalDate getDateOfModification() {
-        return dateOfModification;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "title", nullable = false, length = 200)
+    public String getTitle() {
+        return title;
+    }
     public void setTitle(String title) {
         this.title = title;
     }
 
+    @Basic
+    @Column(name = "ISBN", nullable = false, length = 13)
+    public String getISBN() {
+        return ISBN;
+    }
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    @Basic
+    @Column(name = "dateOfCreation")
+    public LocalDate getDateOfCreation() {
+        return dateOfCreation;
     }
-
     public void setDateOfCreation(LocalDate dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 
+    @Basic
+    @Column(name = "dateOfModification")
+    public LocalDate getDateOfModification() {
+        return dateOfModification;
+    }
     public void setDateOfModification(LocalDate dateOfModification) {
         this.dateOfModification = dateOfModification;
     }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
+    public Genre getGenre() {
+        return genre;
+    }
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    @ManyToMany(mappedBy = "books")
+    public List<Author> getAuthors() { return authors; }
+    public void setAuthors(List<Author> authors) { this.authors = authors; }
 }

@@ -4,99 +4,116 @@ import com.example.tskTwo.Book.Book;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "Author")
 public class Author {
-    @Id
-    @SequenceGenerator(
-            name = "author_sequence",
-            sequenceName = "author_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "author_sequence"
-    )
     private long id;
     private String firstName;
     private String lastName;
     private String middleName;
     private LocalDate dateOfBirth;
-    @ManyToMany
-    @JoinTable(
-            name="BOOK",
-            joinColumns=@JoinColumn(name="ID_AUTHOR", referencedColumnName="ID_AUTHOR"),
-            inverseJoinColumns=@JoinColumn(name="ID_BOOK", referencedColumnName="ID_BOOK"))
-    private List<Book> book = new ArrayList<>();
+    private LocalDate dateOfCreation;
+    private LocalDate dateOfModification;
+
+    private Set<Book> books;
 
     public Author() {
     }
 
-    public Author(String firstName, String lastName, String middleName, LocalDate dateOfBirth, List<Book> book) {
+    public Author(String firstName, String lastName, String middleName, LocalDate dateOfBirth, Set<Book> book, LocalDate dateOfCreation, LocalDate dateOfModification) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.dateOfBirth = dateOfBirth;
-        this.book = book;
+        this.books = book;
+        this.dateOfCreation = dateOfCreation;
+        this.dateOfModification = dateOfModification;
     }
 
-    public Author(long id, String firstName, String lastName, String middleName, LocalDate dateOfBirth, List<Book> book) {
+    public Author(long id, String firstName, String lastName, String middleName, LocalDate dateOfBirth, Set<Book> book, LocalDate dateOfCreation, LocalDate dateOfModification) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.dateOfBirth = dateOfBirth;
-        this.book = book;
+        this.books = book;
+        this.dateOfCreation = dateOfCreation;
+        this.dateOfModification = dateOfModification;
     }
-
+    @Id
+    @Column(name = "id", nullable = false, precision = 0)
     public long getId() {
         return id;
     }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public List<Book> getBook() {
-        return book;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "firstName", length = 200)
+    public String getFirstName() {
+        return firstName;
+    }
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @Basic
+    @Column(name = "lastName", length = 200)
+    public String getLastName() {
+        return lastName;
+    }
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @Basic
+    @Column(name = "middleName", length = 200)
+    public String getMiddleName() {
+        return middleName;
+    }
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
 
+    @Basic
+    @Column(name = "dateOfBirth")
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setBook(List<Book> books) {
-        this.book = books;
+    @Basic
+    @Column(name = "dateOfCreation")
+    public LocalDate getDateOfCreation() {
+        return dateOfCreation;
+    }
+    public void setDateOfCreation(LocalDate dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
+    }
+
+    @Basic
+    @Column(name = "dateOfModification")
+    public LocalDate getDateOfModification() {
+        return dateOfModification;
+    }
+    public void setDateOfModification(LocalDate dateOfModification) {
+        this.dateOfModification = dateOfModification;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "Authors_Books",
+            joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
+    )
+    public Set<Book> getBooks() {
+        return books;
+    }
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }
