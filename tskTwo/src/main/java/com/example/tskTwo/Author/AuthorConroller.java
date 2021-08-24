@@ -40,8 +40,10 @@ public class AuthorConroller {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String middleName,
-            @RequestParam(required = false) LocalDate dateOfBirth) {
-        authorService.putAuthor(authorId,firstName, lastName, middleName, dateOfBirth);
+            @RequestParam(required = false) LocalDate dateOfBirth,
+            @RequestParam(required = false) LocalDate dateOfCreation,
+            @RequestParam(required = false) LocalDate dateOfModification) {
+        authorService.putAuthor(authorId,firstName, lastName, middleName, dateOfBirth, dateOfCreation, dateOfModification);
     }
 
     @PatchMapping("/Author/{id}/{dateOfModification}")

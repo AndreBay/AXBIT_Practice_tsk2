@@ -41,7 +41,7 @@ public class AuthorService {
     }
 
     @Transactional
-    public void putAuthor(Long authorId, String firstName, String lastName, String middleName, LocalDate dateOfBirth){
+    public void putAuthor(Long authorId, String firstName, String lastName, String middleName, LocalDate dateOfBirth, LocalDate dateOfCreation, LocalDate dateOfModification){
         Author author = authorRepository.findById(authorId).
                 orElseThrow(() -> new IllegalStateException(
                         "Author with Id " + authorId + " does not exist"));
@@ -57,6 +57,12 @@ public class AuthorService {
         }
         if(dateOfBirth != null && Objects.equals(dateOfBirth, author.getDateOfBirth())){
             author.setDateOfBirth(dateOfBirth);
+        }
+        if(dateOfCreation != null && Objects.equals(dateOfCreation, author.getDateOfCreation())){
+            author.setDateOfCreation(dateOfBirth);
+        }
+        if(dateOfModification != null && Objects.equals(dateOfModification, author.getDateOfModification())){
+            author.setDateOfModification(dateOfBirth);
         }
     }
 

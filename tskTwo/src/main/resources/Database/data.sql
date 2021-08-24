@@ -4,10 +4,10 @@ INSERT INTO Genre VALUES
 (3, 'Taskbook', 'Information about science technologies', '2010-03-30', '2010-04-30');
 
 INSERT INTO Author VALUES
-(1, 'Chris', 'Lord', 'Alge'),--, '1964-09-24', '2021-06-04', '2021-07-05'),
-(2, 'William', ' ','Shakespeare'),--, '1564-04-26', '2021-07-04', '2021-02-05'),
-(3, 'Jules', 'Gabriel', 'Verne'),--, '1828-02-08', '2021-08-04', '2021-05-30'),
-(4, 'Andrew', ' ','Scheps');--, '1972-11-16', '2021-03-04', '2021-03-05');
+(1, 'Chris', 'Lord', 'Alge', '1964-09-24', '2021-06-04', '2021-07-05'),
+(2, 'William', ' ','Shakespeare', '1564-04-26', '2021-07-04', '2021-02-05'),
+(3, 'Jules', 'Gabriel', 'Verne', '1828-02-08', '2021-08-04', '2021-05-30'),
+(4, 'Andrew', ' ','Scheps', '1972-11-16', '2021-03-04', '2021-03-05');
 
 INSERT INTO Book VALUES
 (1, 'Romeo and Juliette', '12-13-4312423', '2021-03-04', '2021-03-05', 2),
