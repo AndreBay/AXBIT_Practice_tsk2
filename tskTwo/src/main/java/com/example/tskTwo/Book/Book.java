@@ -2,6 +2,7 @@ package com.example.tskTwo.Book;
 
 import com.example.tskTwo.Author.Author;
 import com.example.tskTwo.Genre.Genre;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -87,6 +88,7 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JsonBackReference
     public Genre getGenre() {
         return genre;
     }
@@ -95,6 +97,7 @@ public class Book {
     }
 
     @ManyToMany(mappedBy = "books")
+    @JsonBackReference
     public List<Author> getAuthors() { return authors; }
     public void setAuthors(List<Author> authors) { this.authors = authors; }
 }

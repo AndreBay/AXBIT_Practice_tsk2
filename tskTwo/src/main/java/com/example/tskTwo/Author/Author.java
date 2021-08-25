@@ -1,6 +1,7 @@
 package com.example.tskTwo.Author;
 
 import com.example.tskTwo.Book.Book;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -110,6 +111,7 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
     )
+    @JsonManagedReference
     public Set<Book> getBooks() {
         return books;
     }

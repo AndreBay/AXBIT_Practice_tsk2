@@ -1,6 +1,7 @@
 package com.example.tskTwo.Genre;
 
 import com.example.tskTwo.Book.Book;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -82,6 +83,7 @@ public class Genre {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
+    @JsonManagedReference
     public List<Book> getBooks() {
         return books;
     }
