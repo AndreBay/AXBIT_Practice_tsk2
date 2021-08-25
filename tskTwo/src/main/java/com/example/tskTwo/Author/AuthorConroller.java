@@ -1,6 +1,5 @@
 package com.example.tskTwo.Author;
 
-import com.example.tskTwo.Book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,25 +24,32 @@ public class AuthorConroller {
     }
 
     @PostMapping
-    public void registerNewAuthor(Author author) {
+    public void registerNewAuthor(@RequestBody Author author) {
         authorService.addNewAuthor(author);
     }
 
-    @DeleteMapping
-    public void deleteAuthor(Long authorId) {
+    @DeleteMapping("/{authorId}")
+    public void deleteAuthor(@PathVariable Long authorId) {
         authorService.deleteAuthor(authorId);
     }
 
-    @PutMapping
+    /*@PutMapping("/{author_id}")
     public void putAuthor(
-            @PathVariable("authorId") Long authorId,
+            @PathVariable("author_id") Long author_id,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String middleName,
             @RequestParam(required = false) LocalDate dateOfBirth,
             @RequestParam(required = false) LocalDate dateOfCreation,
             @RequestParam(required = false) LocalDate dateOfModification) {
-        authorService.putAuthor(authorId,firstName, lastName, middleName, dateOfBirth, dateOfCreation, dateOfModification);
+        authorService.putAuthor(author_id,firstName, lastName, middleName, dateOfBirth, dateOfCreation, dateOfModification);
+    }*/
+
+    @PutMapping("/{author_id}")
+    public void putAuthor(
+            @PathVariable("author_id") Long author_id,
+            @RequestBody Author author) {
+        authorService.putAuthor(author_id, author);
     }
 
     @PatchMapping("/Author/{id}/{dateOfModification}")

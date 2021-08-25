@@ -1,6 +1,5 @@
 package com.example.tskTwo.Author;
 
-import com.example.tskTwo.Book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +32,14 @@ public class AuthorService {
     }
 
     public void deleteAuthor(Long authorId){
-        Boolean exist = authorRepository.existsById(authorId);
+        boolean exist = authorRepository.existsById(authorId);
         if(!exist){
             throw new IllegalStateException("Author with id" + authorId + "does not exist");
         }
         authorRepository.deleteById(authorId);
     }
 
-    @Transactional
+    /*@Transactional
     public void putAuthor(Long authorId, String firstName, String lastName, String middleName, LocalDate dateOfBirth, LocalDate dateOfCreation, LocalDate dateOfModification){
         Author author = authorRepository.findById(authorId).
                 orElseThrow(() -> new IllegalStateException(
@@ -63,6 +62,32 @@ public class AuthorService {
         }
         if(dateOfModification != null && Objects.equals(dateOfModification, author.getDateOfModification())){
             author.setDateOfModification(dateOfBirth);
+        }
+    }*/
+
+    @Transactional
+    public void putAuthor(Long authorId, Author newAuthor){
+        Author author = authorRepository.findById(authorId).
+                orElseThrow(() -> new IllegalStateException(
+                        "Author with Id " + authorId + " does not exist"));
+
+        if(newAuthor.getFirstName() != null && newAuthor.getFirstName().length() > 0 && Objects.equals(newAuthor.getFirstName(), author.getFirstName())){
+            author.setFirstName(newAuthor.getFirstName());
+        }
+        if(newAuthor.getLastName() != null && newAuthor.getLastName().length() > 0 && Objects.equals(newAuthor.getLastName(), author.getLastName())){
+            author.setLastName(newAuthor.getLastName());
+        }
+        if(newAuthor.getMiddleName() != null && Objects.equals(newAuthor.getMiddleName(), author.getMiddleName())){
+            author.setMiddleName(newAuthor.getMiddleName());
+        }
+        if(newAuthor.getDateOfBirth() != null && Objects.equals(newAuthor.getDateOfBirth(), author.getDateOfBirth())){
+            author.setDateOfBirth(newAuthor.getDateOfBirth());
+        }
+        if(newAuthor.getDateOfCreation() != null && Objects.equals(newAuthor.getDateOfCreation(), author.getDateOfCreation())){
+            author.setDateOfCreation(newAuthor.getDateOfCreation());
+        }
+        if(newAuthor.getDateOfModification() != null && Objects.equals(newAuthor.getDateOfModification(), author.getDateOfModification())){
+            author.setDateOfModification(newAuthor.getDateOfModification());
         }
     }
 

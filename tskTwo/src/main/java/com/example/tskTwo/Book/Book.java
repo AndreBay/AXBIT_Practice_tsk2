@@ -67,7 +67,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "dateOfCreation")
+    @Column(name = "date_of_creation")
     public LocalDate getDateOfCreation() {
         return dateOfCreation;
     }
@@ -76,7 +76,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "dateOfModification")
+    @Column(name = "date_of_modification")
     public LocalDate getDateOfModification() {
         return dateOfModification;
     }

@@ -52,7 +52,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "firstName", length = 200)
+    @Column(name = "first_name", length = 200)
     public String getFirstName() {
         return firstName;
     }
@@ -61,7 +61,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "lastName", length = 200)
+    @Column(name = "last_name", length = 200)
     public String getLastName() {
         return lastName;
     }
@@ -70,7 +70,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "middleName", length = 200)
+    @Column(name = "middle_name", length = 200)
     public String getMiddleName() {
         return middleName;
     }
@@ -79,7 +79,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "dateOfBirth")
+    @Column(name = "date_of_birth")
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
@@ -88,7 +88,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "dateOfCreation")
+    @Column(name = "date_of_creation")
     public LocalDate getDateOfCreation() {
         return dateOfCreation;
     }
@@ -97,7 +97,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "dateOfModification")
+    @Column(name = "date_of_modification")
     public LocalDate getDateOfModification() {
         return dateOfModification;
     }

@@ -46,7 +46,7 @@ public class Genre {
     }
 
     @Basic
-    @Column(name = "genreName", nullable = false, length = 100)
+    @Column(name = "genre_name", nullable = false, length = 100)
     public String getGenreName() {
         return genreName;
     }
@@ -64,7 +64,7 @@ public class Genre {
     }
 
     @Basic
-    @Column(name = "dateOfCreation")
+    @Column(name = "date_of_creation")
     public LocalDate getDateOfCreation() {
         return dateOfCreation;
     }
@@ -73,7 +73,7 @@ public class Genre {
     }
 
     @Basic
-    @Column(name = "dateOfModification")
+    @Column(name = "date_of_modification")
     public LocalDate getDateOfModification() {
         return dateOfModification;
     }
