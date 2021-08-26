@@ -1,4 +1,6 @@
-CREATE TABLE IF NOT EXISTS Genre
+DROP TABLE IF EXISTS Authors_Books, Book, Author, Genre;
+
+CREATE TABLE  Genre
 (
     id    BIGSERIAL PRIMARY KEY,
     genre_name  VARCHAR(100),
@@ -7,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Genre
     date_of_modification DATE  NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Author
+CREATE TABLE  Author
 (
     id    BIGSERIAL PRIMARY KEY,
     first_name  VARCHAR(200) NOT NULL,
@@ -18,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Author
     date_of_modification DATE  NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Book
+CREATE TABLE  Book
 (
     id    BIGSERIAL PRIMARY KEY,
     title  VARCHAR(200) NOT NULL,
@@ -28,7 +30,7 @@ CREATE TABLE IF NOT EXISTS Book
     genre_id BIGSERIAL NOT NULL REFERENCES Genre(id)
 );
 
-CREATE TABLE IF NOT EXISTS Authors_Books
+CREATE TABLE  Authors_Books
 (
     author_id BIGSERIAL CONSTRAINT authors_books_author_id_fk REFERENCES Author(id),
     book_id BIGSERIAL CONSTRAINT authors_books_book_id_fk REFERENCES Book(id)

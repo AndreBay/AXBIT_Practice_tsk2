@@ -1,11 +1,12 @@
 package com.example.tskTwo.Author;
 
+import com.example.tskTwo.Book.Book;
+import com.example.tskTwo.Genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,29 +34,23 @@ public class AuthorConroller {
         authorService.deleteAuthor(authorId);
     }
 
-    /*@PutMapping("/{author_id}")
-    public void putAuthor(
-            @PathVariable("author_id") Long author_id,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String middleName,
-            @RequestParam(required = false) LocalDate dateOfBirth,
-            @RequestParam(required = false) LocalDate dateOfCreation,
-            @RequestParam(required = false) LocalDate dateOfModification) {
-        authorService.putAuthor(author_id,firstName, lastName, middleName, dateOfBirth, dateOfCreation, dateOfModification);
-    }*/
-
     @PutMapping("/{author_id}")
-    public void putAuthor(
+    @ResponseBody
+    public ResponseEntity<Author> putAuthor(
             @PathVariable("author_id") Long author_id,
             @RequestBody Author author) {
-        authorService.putAuthor(author_id, author);
+        try {
+            return new ResponseEntity<Author>(authorService.putAuthor(author_id, author), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PatchMapping("/Author/{id}/{dateOfModification}")
-    public ResponseEntity<Author> updateAuthorPartially(@PathVariable Long id, @PathVariable LocalDate dateOfModification) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Author> patchAuthor(@RequestBody Author author, @PathVariable("id") Long author_id){
+
         try {
-            return new ResponseEntity<Author>(authorService.patchAuthor(id, dateOfModification), HttpStatus.OK);
+            return new ResponseEntity<Author>(authorService.patchAuthor(author_id, author), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

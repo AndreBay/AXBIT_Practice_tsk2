@@ -42,35 +42,55 @@ public class GenreService {
     }
 
     @Transactional
-    public void putGenre(Long genreId, String genreName, String description, LocalDate dateOfCreation, LocalDate dateOfModification){
+    public Genre putGenre(Long genreId, Genre newGenre){
         Genre genre = genreRepository.findById(genreId).
                 orElseThrow(()-> new IllegalStateException(
                         "Genre with Id " + genreId + " does not exist"));
-        if(genreName != null && genreName.length() > 0 && !Objects.equals(genreName, genre.getGenreName())){
-            Optional<Genre> optionalGenre = genreRepository.findGenreByGenreName(genreName);
+
+        if(newGenre.getGenreName() == null) throw new IllegalStateException("Genre name is equal to null");
+        if(newGenre.getDescription() == null) throw new IllegalStateException("Genre description is equal to null");
+        if(newGenre.getDateOfCreation() == null) throw new IllegalStateException("Genre DateOfCreation is equal to null");
+        if(newGenre.getDateOfModification() == null) throw new IllegalStateException("Genre DateOfModification is equal to null");
+
+        if(newGenre.getGenreName().length() > 0 && !Objects.equals(newGenre.getGenreName(), genre.getGenreName())){
+            Optional<Genre> optionalGenre = genreRepository.findGenreByGenreName(newGenre.getGenreName());
             if(optionalGenre.isPresent()){
-                throw new IllegalStateException("Genre Name" + genreName + "taken");
+                throw new IllegalStateException("Genre Name" + newGenre.getGenreName() + "taken");
             }
-            genre.setGenreName(genreName);
+            genre.setGenreName(newGenre.getGenreName());
         }
-        if(description != null && description.length() > 0 && !Objects.equals(description, genre.getDescription())){
-            genre.setDescription(description);
+        if(newGenre.getDescription().length() > 0 && !Objects.equals(newGenre.getDescription(), genre.getDescription())){
+            genre.setDescription(newGenre.getDescription());
         }
-        if(dateOfCreation != null && Objects.equals(dateOfCreation, genre.getDateOfCreation())){
-            genre.setDateOfCreation(dateOfCreation);
+        if(!Objects.equals(newGenre.getDateOfCreation(), genre.getDateOfCreation())){
+            genre.setDateOfCreation(newGenre.getDateOfCreation());
         }
-        if(dateOfModification != null && Objects.equals(dateOfModification, genre.getDateOfModification())){
-            genre.setDateOfModification(dateOfModification);
+        if(!Objects.equals(newGenre.getDateOfModification(), genre.getDateOfModification())){
+            genre.setDateOfModification(newGenre.getDateOfModification());
         }
+        return genre;
     }
 
     @Transactional
-    public Genre patchGenre(Long genreId, String description){
+    public Genre patchGenre(Long genreId, Genre newGenre){
         Genre genre = genreRepository.findById(genreId).
                 orElseThrow(()-> new IllegalStateException(
                         "Genre with Id " + genreId + " does not exist"));
-        if(description != null && Objects.equals(genre.getDescription(), description)){
-            genre.setDescription(description);
+        if(newGenre.getGenreName() != null && newGenre.getGenreName().length() > 0 && !Objects.equals(newGenre.getGenreName(), genre.getGenreName())){
+            Optional<Genre> optionalGenre = genreRepository.findGenreByGenreName(newGenre.getGenreName());
+            if(optionalGenre.isPresent()){
+                throw new IllegalStateException("Genre Name" + newGenre.getGenreName() + "taken");
+            }
+            genre.setGenreName(newGenre.getGenreName());
+        }
+        if(newGenre.getDescription() != null && newGenre.getDescription().length() > 0 && !Objects.equals(newGenre.getDescription(), genre.getDescription())){
+            genre.setDescription(newGenre.getDescription());
+        }
+        if(newGenre.getDateOfCreation() != null && !Objects.equals(newGenre.getDateOfCreation(), genre.getDateOfCreation())){
+            genre.setDateOfCreation(newGenre.getDateOfCreation());
+        }
+        if(newGenre.getDateOfModification() != null && !Objects.equals(newGenre.getDateOfModification(), genre.getDateOfModification())){
+            genre.setDateOfModification(newGenre.getDateOfModification());
         }
         return genre;
     }

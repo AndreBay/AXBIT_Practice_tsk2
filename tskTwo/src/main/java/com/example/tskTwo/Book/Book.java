@@ -2,14 +2,14 @@ package com.example.tskTwo.Book;
 
 import com.example.tskTwo.Author.Author;
 import com.example.tskTwo.Genre.Genre;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "book")
+@Table(name = "Book")
 public class Book {
     private long id;
     private String title;
@@ -88,7 +88,7 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", insertable = false, updatable = false)
-    @JsonBackReference
+    @JsonIgnore
     public Genre getGenre() {
         return genre;
     }
@@ -97,7 +97,7 @@ public class Book {
     }
 
     @ManyToMany(mappedBy = "books")
-    @JsonBackReference
+    @JsonIgnore
     public List<Author> getAuthors() { return authors; }
     public void setAuthors(List<Author> authors) { this.authors = authors; }
 }

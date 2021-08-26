@@ -1,6 +1,5 @@
 package com.example.tskTwo.Book;
 
-import com.example.tskTwo.Genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,24 +24,24 @@ public class BookController {
     @PostMapping
     public void registerNewBook(@RequestBody Book book){bookService.addNewBook(book);}
 
-    @DeleteMapping
-    public void deleteBook(Long bookId){bookService.deleteBook(bookId);}
+    @DeleteMapping("/{bookId}")
+    public void deleteBook(@PathVariable Long bookId){bookService.deleteBook(bookId);}
 
-    @PutMapping(path = "@{bookId}")
-    public void putBook(
+    @PutMapping(path = "/{bookId}")
+    public ResponseEntity<Book> putBook(
             @PathVariable("bookId") Long bookId,
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String ISBN,
-            @RequestParam(required = false) Genre genre,
-            @RequestParam(required = false) LocalDate dateOfCreation,
-            @RequestParam(required = false) LocalDate dateOfModification){
-        bookService.putBook(bookId, title, ISBN, genre, dateOfCreation, dateOfModification);
+            @RequestBody Book newBook){
+        try {
+            return new ResponseEntity<Book>(bookService.putBook(bookId, newBook), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PatchMapping("/Book/{id}/{dateOfModification}")
-    public ResponseEntity<Book> updateBookPartially(@PathVariable Long id, @PathVariable LocalDate dateOfModification) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Book> updateBookPartially(@PathVariable Long id, @RequestBody Book newBook) {
         try {
-            return new ResponseEntity<Book>(bookService.patchBook(id, dateOfModification), HttpStatus.OK);
+            return new ResponseEntity<Book>(bookService.patchBook(id, newBook), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

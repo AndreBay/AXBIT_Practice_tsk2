@@ -24,32 +24,31 @@ public class GenreController {
     }
 
     @PostMapping
-    public void registerNewGenre(Genre genre){
+    public void registerNewGenre(@RequestBody Genre genre){
         genreService.addNewGenre(genre);
     }
 
-    @DeleteMapping
-    public void deleteGenre(@PathVariable ("genreId")Long genreId){
+    @DeleteMapping("/{genreId}")
+    public void deleteGenre(@PathVariable Long genreId){
         genreService.deleteGenre(genreId);
     }
 
-    @PutMapping(path = "@{GenreId}")
-    public void putGenre(
-            @PathVariable("GenreId") Long StudentId,
-            @RequestParam(required = false) String genreName,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) LocalDate dateOfCreation,
-            @RequestParam(required = false) LocalDate dateOfModification){
-        genreService.putGenre(StudentId, genreName, description, dateOfCreation, dateOfModification);
-
-    }
-    @PatchMapping("/Genre/{id}/{description}")
-    public ResponseEntity<Genre> updateGenrePartially(@PathVariable Long id, @PathVariable String description) {
+    @PutMapping(path = "/{genreId}")
+    public ResponseEntity<Genre> putGenre(
+            @PathVariable("genreId") Long StudentId,
+            @RequestBody Genre newGenre){
         try {
-            /*Genre genre = genreService.patchGenre(id, description);
-            Genre genre = GenreRepository.findById(id).get();//employeeRepository.findById(id).get();
-            genre.setDescription(description);*/
-            return new ResponseEntity<Genre>(genreService.patchGenre(id, description), HttpStatus.OK);
+            return new ResponseEntity<Genre>(genreService.putGenre(StudentId, newGenre), HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Genre> updateGenrePartially(@PathVariable Long id, @RequestBody Genre genre) {
+        try {
+            return new ResponseEntity<Genre>(genreService.patchGenre(id, genre), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -39,38 +39,58 @@ public class BookService {
     }
 
     @Transactional
-    public void putBook(Long bookId, String title, String ISBN, Genre genre, LocalDate dateOfCreation,LocalDate dateOfModification) {
+    public Book putBook(Long bookId, Book newBook) {
         Book book = bookRepository.findById(bookId).
                 orElseThrow(() -> new IllegalStateException(
                         "Book with Id " + bookId + " does not exist"));
-        if(title != null && title.length() > 0 && !Objects.equals(title, book.getTitle())){
-            Optional<Book> optionalBook = bookRepository.findBookByGenreTitle(title);
+        if(newBook.getTitle() == null) throw new IllegalStateException("Book title is equal to null");
+        if(newBook.getISBN() == null) throw new IllegalStateException("Book ISBN is equal to null");
+        if(newBook.getDateOfCreation() == null) throw new IllegalStateException("Book DateOfCreation is equal to null");
+        if(newBook.getDateOfModification() == null) throw new IllegalStateException("Book DateOfModification is equal to null");
+
+
+        if(newBook.getTitle().length() > 0 && !Objects.equals(newBook.getTitle(), book.getTitle())){
+            Optional<Book> optionalBook = bookRepository.findBookByGenreTitle(newBook.getTitle());
             if(optionalBook.isPresent()){
-                throw new IllegalStateException("Book title" + title + "taken");
+                throw new IllegalStateException("Book title" + newBook.getTitle() + "taken");
             }
-            book.setTitle(title);
+            book.setTitle(newBook.getTitle());
         }
-        if(ISBN != null && !Objects.equals(ISBN, book.getISBN())){
-            book.setISBN(ISBN);
+        if(!Objects.equals(newBook.getISBN(), book.getISBN())){
+            book.setISBN(newBook.getISBN());
         }
-        if(genre != null && !Objects.equals(genre, book.getGenre())){
-            book.setGenre(genre);
+        if(!Objects.equals(newBook.getDateOfCreation(), book.getDateOfCreation())){
+            book.setDateOfCreation(newBook.getDateOfCreation());
         }
-        if( dateOfCreation != null && !Objects.equals(dateOfCreation, book.getDateOfCreation())){
-            book.setDateOfCreation(dateOfCreation);
+        if(!Objects.equals(newBook.getDateOfModification(), book.getDateOfModification())){
+            book.setDateOfModification(newBook.getDateOfModification());
         }
-        if(dateOfModification != null && !Objects.equals(dateOfModification, book.getDateOfModification())){
-            book.setDateOfModification(dateOfModification);
-        }                                                      
+        return book;
     }
 
     @Transactional
-    public Book patchBook(Long bookId, LocalDate dateOfModification){
+    public Book patchBook(Long bookId, Book newBook){
         Book book = bookRepository.findById(bookId).
                 orElseThrow(()-> new IllegalStateException(
                         "Book with Id " + bookId + " does not exist"));
-        if(dateOfModification != null && Objects.equals(book.getDateOfModification(), dateOfModification)){
-            book.setDateOfModification(dateOfModification);
+        if(newBook.getTitle() != null && newBook.getTitle().length() > 0 && !Objects.equals(newBook.getTitle(), book.getTitle())){
+            Optional<Book> optionalBook = bookRepository.findBookByGenreTitle(newBook.getTitle());
+            if(optionalBook.isPresent()){
+                throw new IllegalStateException("Book title" + newBook.getTitle() + "taken");
+            }
+            book.setTitle(newBook.getTitle());
+        }
+        if(newBook.getISBN() != null && !Objects.equals(newBook.getISBN(), book.getISBN())){
+            book.setISBN(newBook.getISBN());
+        }
+        if(newBook.getGenre() != null && !Objects.equals(newBook.getGenre(), book.getGenre())){
+            book.setGenre(newBook.getGenre());
+        }
+        if(newBook.getDateOfCreation() != null && !Objects.equals(newBook.getDateOfCreation(), book.getDateOfCreation())){
+            book.setDateOfCreation(newBook.getDateOfCreation());
+        }
+        if(newBook.getDateOfModification() != null && !Objects.equals(newBook.getDateOfModification(), book.getDateOfModification())){
+            book.setDateOfModification(newBook.getDateOfModification());
         }
         return book;
     }
