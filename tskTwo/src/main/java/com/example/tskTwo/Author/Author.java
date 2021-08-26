@@ -44,7 +44,7 @@ public class Author {
         this.dateOfModification = dateOfModification;
     }
     @Id
-    @Column(name = "id", nullable = false, precision = 0)
+    @Column(name = "id", nullable = false)
     public long getId() {
         return id;
     }

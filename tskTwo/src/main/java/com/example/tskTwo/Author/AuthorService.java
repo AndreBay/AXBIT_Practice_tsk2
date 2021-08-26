@@ -46,7 +46,7 @@ public class AuthorService {
 
         if(newAuthor.getFirstName() == null) throw new IllegalStateException("Author`s first name is equal to null");
         if(newAuthor.getLastName() == null) throw new IllegalStateException("Author`s last name is equal to null");
-        if(newAuthor.getMiddleName() == null) throw new IllegalStateException("Author`s midlle name is equal to null");
+        if(newAuthor.getMiddleName() == null) throw new IllegalStateException("Author`s middle name is equal to null");
         if(newAuthor.getDateOfCreation() == null) throw new IllegalStateException("Author`s DateOfCreation is equal to null");
         if(newAuthor.getDateOfBirth() == null) throw new IllegalStateException("Author`s DateOfBirth is equal to null");
         if(newAuthor.getDateOfModification() == null) throw new IllegalStateException("Author`s DateOfModification is equal to null");

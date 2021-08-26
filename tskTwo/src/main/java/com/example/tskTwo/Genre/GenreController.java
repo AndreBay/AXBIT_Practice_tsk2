@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -38,7 +37,7 @@ public class GenreController {
             @PathVariable("genreId") Long StudentId,
             @RequestBody Genre newGenre){
         try {
-            return new ResponseEntity<Genre>(genreService.putGenre(StudentId, newGenre), HttpStatus.OK);
+            return new ResponseEntity<>(genreService.putGenre(StudentId, newGenre), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -48,7 +47,7 @@ public class GenreController {
     @PatchMapping("/{id}")
     public ResponseEntity<Genre> updateGenrePartially(@PathVariable Long id, @RequestBody Genre genre) {
         try {
-            return new ResponseEntity<Genre>(genreService.patchGenre(id, genre), HttpStatus.OK);
+            return new ResponseEntity<>(genreService.patchGenre(id, genre), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

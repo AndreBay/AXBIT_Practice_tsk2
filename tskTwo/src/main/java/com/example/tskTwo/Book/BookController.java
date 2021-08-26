@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -32,7 +31,7 @@ public class BookController {
             @PathVariable("bookId") Long bookId,
             @RequestBody Book newBook){
         try {
-            return new ResponseEntity<Book>(bookService.putBook(bookId, newBook), HttpStatus.OK);
+            return new ResponseEntity<>(bookService.putBook(bookId, newBook), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -41,7 +40,7 @@ public class BookController {
     @PatchMapping("/{id}")
     public ResponseEntity<Book> updateBookPartially(@PathVariable Long id, @RequestBody Book newBook) {
         try {
-            return new ResponseEntity<Book>(bookService.patchBook(id, newBook), HttpStatus.OK);
+            return new ResponseEntity<>(bookService.patchBook(id, newBook), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

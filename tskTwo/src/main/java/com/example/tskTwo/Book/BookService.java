@@ -1,11 +1,9 @@
 package com.example.tskTwo.Book;
 
-import com.example.tskTwo.Genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,7 +29,7 @@ public class BookService {
     }
 
     public void deleteBook(Long bookId){
-        Boolean exists = bookRepository.existsById(bookId);
+        boolean exists = bookRepository.existsById(bookId);
         if(!exists){
             throw new IllegalStateException("Book with id" + bookId + "does not exist");
         }

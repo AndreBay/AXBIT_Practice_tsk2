@@ -2,7 +2,6 @@ package com.example.tskTwo.Genre;
 
 import com.example.tskTwo.Book.Book;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
